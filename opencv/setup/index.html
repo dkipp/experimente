@@ -2,62 +2,129 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Learn RxJS with Coursetro</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <style>
-        body {
-            font-family: 'Arial';
-            background: #ececec;
-        }
+  <title>OpenCV.js Experimente</title>
 
-        ul {
-            list-style-type: none;
-            padding: 20px;
-        }
+  <style>
+    body {
+      font-family: 'Arial';
+      background: #ececec;
+    }
 
-        li {
-            padding: 20px;
-            background: white;
-            margin-bottom: 5px;
-        }
-    </style>
+    figure {
+      display: inline-block;
+      margin: 1em;
+      padding: .5em;
+      background: #FFF;
+      border: 1px solid #dfdfdf;
+    }
+
+    figcaption {
+      color: #555;
+      font-style: italic;
+      font-size: .7rem;
+    }
+
+    h1,
+    h2 {
+      margin-left: .5em;
+    }
+
+    #inputs {
+      display: none;
+    }
+  </style>
 
 </head>
 
 <body>
-    <h2>Hello OpenCV.js</h2>
-    <p id="status">OpenCV.js is loading...</p>
-    <div>
-        <div class="inputoutput">
-            <img id="imageSrc" alt="No Image" />
-            <div class="caption">imageSrc
-                <input type="file" id="fileInput" name="file" />
-            </div>
-        </div>
-        <div class="inputoutput">
-            <canvas id="canvasOutput"></canvas>
-            <div class="caption">canvasOutput</div>
-        </div>
-    </div>
-    <script type="text/javascript">
-        let imgElement = document.getElementById('imageSrc');
-        let inputElement = document.getElementById('fileInput');
-        inputElement.addEventListener('change', (e) => {
-            imgElement.src = URL.createObjectURL(e.target.files[0]);
-        }, false);
-        imgElement.onload = function () {
-            let mat = cv.imread(imgElement);
-            cv.imshow('canvasOutput', mat);
-            mat.delete();
-        };
-        function onOpenCvReady() {
-            document.getElementById('status').innerHTML = 'OpenCV.js is ready.';
-        }
-    </script>
-    <script async src="js/opencv.js" onload="onOpenCvReady();" type="text/javascript"></script>
+  <h1>Hello OpenCV.js</h1>
+  <div id="inputs">
+    <img id="imageSrc01" src="./img/schirme.jpg" />
+    <img id="imageSrc02" src="./img/schirme.jpg" />
+    <figure>
+      <canvas></canvas>
+      <figcaption></figcaption>
+    </figure>
+  </div>
+  <div id="content">
+  </div>
+
+  <script type="text/javascript">
+
+    // codeformat: Shift + Alt + F
+    let img1 = document.getElementById('imageSrc01');
+    let img2 = document.getElementById('imageSrc02');
+
+    function onOpenCvReady() {
+      console.log('OpenCV.js is ready.');
+
+      let srcMat1 = cv.imread(img1);
+      let srcMat2 = cv.imread(img2);
+
+      addFigure(srcMat1, 'OpenCV Input 1');
+      addFigure(srcMat2, 'OpenCV Input 2');
+
+      /*
+       *  RGBA Kanäle
+       */
+      addHeading('RGBA Kanäle:')
+
+      let rgbaPlanes = new cv.MatVector();
+      // Split the Mat
+      cv.split(srcMat1, rgbaPlanes);
+
+      // Get R channel
+      addFigure(rgbaPlanes.get(0), 'Rot');
+      // Get G channel
+      addFigure(rgbaPlanes.get(1), 'Grün');
+      // Get B channel
+      addFigure(rgbaPlanes.get(2), 'Blau');
+      // Get Mask channel
+      addFigure(rgbaPlanes.get(3), 'Alpha');
+
+      //cleanup
+      rgbaPlanes.delete();
+
+
+
+      /*
+       *  Filter
+       */
+      addHeading('Filter:');
+
+      // Canny Edge Detection
+      let dst = new cv.Mat();
+      cv.cvtColor(srcMat1, srcMat1, cv.COLOR_RGB2GRAY, 0);
+      cv.Canny(srcMat1, dst, 50, 100, 3, false); // You can try more different parameters
+      addFigure(dst, 'Canny Edge Detection');
+      dst.delete();
+
+
+      // next 
+    }
+
+    function addFigure(mat, caption) {
+      let root = document.getElementById('content');
+
+      let tpl = document.querySelector('#inputs figure').cloneNode(true);
+      cv.imshow(tpl.querySelector('canvas'), mat);
+
+      tpl.querySelector('figcaption').textContent = caption;
+      root.appendChild(tpl);
+    }
+
+    function addHeading(text) {
+      let root = document.getElementById('content');
+      let heading = document.createElement('h2');
+      heading.textContent = text;
+      root.appendChild(heading);
+    }
+  </script>
+  <script async src="js/opencv.js" onload="onOpenCvReady();" type="text/javascript"></script>
 </body>
 
 </html>
