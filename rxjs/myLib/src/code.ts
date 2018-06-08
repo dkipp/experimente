@@ -1,5 +1,19 @@
 import { Observable, timer, combineLatest } from 'rxjs';
 
+
+class MyLib {
+
+  static add( p1:number, p2:number):number {
+    return p1 + p2;
+  }
+
+  static sub( p1:number, p2:number):number {
+    return p1 - p2;
+  }
+
+
+}
+
 //https://coursetro.com/posts/code/148/RxJS-Observables-Tutorial---Creating-&-Subscribing-to-Observables
 //timerOne emits first value at 1s, then once every 4s
 const timerOne = timer(1000, 4000);
@@ -8,18 +22,19 @@ const timerTwo = timer(2000, 4000);
 //timerThree emits first value at 3s, then once every 4s
 const timerThree = timer(3000, 4000);
 
-//combineLatest also takes an optional projection function
-const combinedProject = combineLatest(
-  timerOne,
-  timerTwo,
-  timerThree,
-  (one:number, two:number, three:number) => {
-    return `Timer One (Proj) Latest: ${one}, 
-              Timer Two (Proj) Latest: ${two}, 
-              Timer Three (Proj) Latest: ${three}`;
-  }
+const libF1 = combineLatest(  timerOne, timerTwo,
+  (one:number, two:number) => { return MyLib.add(one, two) }
 );
+
+const libF2 = combineLatest(  libF1, timerThree,
+  (one:number, two:number) => { return MyLib.sub(one, two) }
+);
+
 //log values
-const subscribe = combinedProject.subscribe( (latestValuesProject: string) =>
-  console.log(latestValuesProject)
+const subscribe1 = libF1.subscribe( (latestValuesProject: number) =>
+  console.log('subscribe1', latestValuesProject)
+);
+
+const subscribe2 = libF2.subscribe( (latestValuesProject: number) =>
+  console.log('subscribe2', latestValuesProject)
 );
