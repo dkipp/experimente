@@ -6,8 +6,8 @@ references & articles used for this setup:
 
 
 ```language
-yarn init -yp
-yarn add typescript tslint
+
+yarn add typescript tslint prettier tslint-config-prettier
 
 npx tsc --init
 npx tslint --init
