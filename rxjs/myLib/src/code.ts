@@ -1,5 +1,5 @@
 import { Observable, timer, combineLatest } from "rxjs";
-import * as cv from "../js/opencv.js";
+//import * as cv from "../js/opencv.js";
 
 class MyLib {
   static add(p1: number, p2: number): number {
@@ -11,8 +11,11 @@ class MyLib {
   }
 }
 
-let point = new cv.Point(12, 34);
 
+/*
+let point = new cv.Point(12, 34);
+console.log(point);
+*/
 //https://coursetro.com/posts/code/148/RxJS-Observables-Tutorial---Creating-&-Subscribing-to-Observables
 //timerOne emits first value at 1s, then once every 4s
 const timerOne = timer(1000, 4000);
