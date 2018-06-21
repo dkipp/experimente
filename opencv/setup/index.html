@@ -65,6 +65,15 @@
       let srcMat1 = cv.imread(img1);
       let srcMat2 = cv.imread(img2);
 
+      console.log( srcMat1.type() );
+      console.log( cv.CV_8U );
+      console.log( cv.CV_8S );
+      console.log( cv.CV_16U );
+      console.log( cv.CV_16S );
+      console.log( cv.CV_32S );
+      console.log( cv.CV_32F );
+      console.log( cv.CV_64F );
+
       addFigure(srcMat1, 'OpenCV Input 1');
       addFigure(srcMat2, 'OpenCV Input 2');
 
@@ -104,7 +113,16 @@
       dst.delete();
 
 
-      // next 
+      // next
+      addHeading('New:');
+      let mat01 = cv.Mat.zeros(233, 350, cv.CV_8UC3);
+      addFigure(mat01, 'cv.Mat.zeros');
+
+      let mat02 = cv.Mat.ones(233, 350, cv.CV_8S);
+      addFigure(mat02, 'cv.Mat.ones');
+
+      let mat03 = new cv.Mat(233, 350, cv.CV_8UC3, new cv.Scalar(130, 100, 70) );
+      addFigure(mat03, 'cv.Mat with rgb');
     }
 
     function addFigure(mat, caption) {
@@ -125,6 +143,8 @@
     }
   </script>
   <script async src="js/opencv.js" onload="onOpenCvReady();" type="text/javascript"></script>
+  <!--script async src="https://docs.opencv.org/trunk/opencv.js" type="text/javascript"></script-->
+  
 </body>
 
 </html>
