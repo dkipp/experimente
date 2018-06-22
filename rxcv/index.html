@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Learn RxJS with Coursetro</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.2.1/rxjs.umd.min.js"></script>
+  <script src="https://dagrejs.github.io/project/graphlib/latest/graphlib.js"></script>
+  <style>
+    body {
+      font-family: 'Arial';
+      background: #ececec;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 20px;
+    }
+
+    li {
+      padding: 20px;
+      background: white;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <script>
+
+
+    testGraph();
+
+    function testRx() {
+      //rxjs tests
+      const timerOne = rxjs.timer(1000, 4000);
+      const timerTwo = rxjs.timer(2000, 4000);
+      const timerThree = rxjs.timer(3000, 4000);
+
+      const combinedProject = rxjs.combineLatest(
+        timerOne,
+        timerTwo,
+        timerThree,
+        (one, two, three) => {
+          return `Timer One (Proj) Latest: ${one}, 
+              Timer Two (Proj) Latest: ${two}, 
+              Timer Three (Proj) Latest: ${three}`;
+        }
+      );
+
+
+      rxjs.of(1, 2, 3)
+        .subscribe(x => {
+          const element = document.createElement('div');
+          element.innerText = 'Data: ' + x;
+          document.body.appendChild(element)
+        },
+          err => { },
+          () => {
+            const element = document.createElement('div');
+            element.innerText = 'All done';
+            document.body.appendChild(element)
+          });
+
+
+      //log values
+      const subscribe = combinedProject.subscribe(latestValuesProject => {
+        const element = document.createElement('p');
+        element.innerText = latestValuesProject;
+        document.body.appendChild(element)
+      });
+    }
+
+
+    function testGraph() {
+
+      var Graph = require("graphlib").Graph;
+
+      // Create a new directed graph
+      var g = new Graph();
+
+      // Add node "a" to the graph with no label
+      g.setNode("a");
+
+      console.log(g.hasNode("a"));
+    }
+  </script>
+</body>
+
+</html>

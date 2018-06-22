@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Learn RxJS with Coursetro</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.2.1/rxjs.umd.min.js"></script>
+  <style>
+    body {
+      font-family: 'Arial';
+      background: #ececec;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 20px;
+    }
+
+    li {
+      padding: 20px;
+      background: white;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <script>
+
+    const timerOne = rxjs.timer(1000, 4000);
+    const timerTwo = rxjs.timer(2000, 4000);
+    const timerThree = rxjs.timer(3000, 4000);
+
+    const n4 = (one, two, three) => {
+      return `Timer One (Proj) Latest: ${one}, Timer Two (Proj) Latest: ${two}, Timer Three (Proj) Latest: ${three}`;
+    };
+
+    const combinedProject = rxjs.combineLatest(timerOne, timerTwo, timerThree, n4);
+
+    //log values
+    const subscribe = combinedProject.subscribe(latestValuesProject => {
+      const element = document.createElement('p');
+      element.innerText = latestValuesProject;
+      document.body.appendChild(element)
+    });
+
+  </script>
+</body>
+
+</html>

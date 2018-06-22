@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Learn RxJS with Coursetro</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.2.1/rxjs.umd.min.js"></script>
+  <style>
+    body {
+      font-family: 'Arial';
+      background: #ececec;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 20px;
+    }
+
+    li {
+      padding: 20px;
+      background: white;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <script>
+
+    //input nodes
+    const i1 = rxjs.of(1000);
+    const i2 = rxjs.of(2000);
+    const i3 = rxjs.of(3000);
+    const i4 = rxjs.of(4000);
+
+    //console.log( i1 );
+
+    // nodes
+    const n1 = rxjs.combineLatest(i1, i4, rxjs.timer );
+    const n2 = rxjs.combineLatest(i2, i4, rxjs.timer );
+    const n3 = rxjs.combineLatest(i3, i4, rxjs.timer );
+
+    // custom nodes
+    const n4 = (one, two, three) => {
+      return `Timer One: ${one}, Timer Two: ${two}, Timer Three: ${three}`;
+    };
+
+    const n5 = rxjs.combineLatest(n1, n2, n3, n4);
+
+    //log values
+    const sub = n5.subscribe(latestValuesProject => {
+      const element = document.createElement('p');
+      element.innerText = latestValuesProject;
+      document.body.appendChild(element)
+    });
+
+  </script>
+</body>
+
+</html>

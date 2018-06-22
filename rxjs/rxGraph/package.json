@@ -1,0 +1,12 @@
+{
+  "name": "rxgraph",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "rxjs": "^6.2.1",
+    "tslint": "^5.10.0",
+    "typescript": "^2.9.2"
+  }
+}

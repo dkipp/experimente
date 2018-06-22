@@ -14,11 +14,10 @@ const combinedProject = combineLatest(
   timerTwo,
   timerThree,
   (one:number, two:number, three:number) => {
-    return `Timer One (Proj) Latest: ${one}, 
-              Timer Two (Proj) Latest: ${two}, 
-              Timer Three (Proj) Latest: ${three}`;
+    return `Timer One (Proj) Latest: ${one}, Timer Two (Proj) Latest: ${two}, Timer Three (Proj) Latest: ${three}`;
   }
 );
+
 //log values
 const subscribe = combinedProject.subscribe( (latestValuesProject: string) =>
   console.log(latestValuesProject)
