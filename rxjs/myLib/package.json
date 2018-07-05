@@ -5,16 +5,18 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "rxjs": "^6.2.0",
-    "ts-loader": "^4.3.1",
-    "typescript": "^2.9.1",
-    "webpack": "^4.11.0",
-    "webpack-dev-server": "^3.1.4"
+    "rxjs": "^6.x",
+    "ts-loader": "^4.x",
+    "typescript": "^2.x",
+    "webpack": "^4.x",
+    "webpack-dev-server": "^3.x"
   },
   "devDependencies": {
-    "webpack-cli": "^3.0.2"
+    "webpack-cli": "^3.x"
   },
   "scripts": {
-    "start": "webpack-dev-server --mode development"
+    "start": "webpack-dev-server --mode development",
+    "dev": "webpack --mode development --max_old_space_size=4096",
+    "build": "webpack --mode production"
   }
 }

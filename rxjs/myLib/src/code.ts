@@ -1,5 +1,9 @@
 import { Observable, timer, combineLatest } from "rxjs";
-//import * as cv from "../js/opencv.js";
+import * as cv from "../js/opencv";
+
+let mat01 = cv.Mat.zeros(233, 350, cv.CV_8UC3);
+console.log(mat01);
+
 
 class MyLib {
   static add(p1: number, p2: number): number {
@@ -10,6 +14,17 @@ class MyLib {
     return p1 - p2;
   }
 }
+
+function handleEvent(e:any){
+  console.log(e);
+}
+
+window.onload = () =>{
+  console.log('onload');
+  //
+  //console.log(mat01);
+}
+
 
 
 /*

@@ -44,13 +44,17 @@
 
     // custom nodes
     const n4 = (one, two, three) => {
+      console.log(one, two, three);
       return `Timer One: ${one}, Timer Two: ${two}, Timer Three: ${three}`;
     };
 
-    const n5 = rxjs.combineLatest(n1, n2, n3, n4);
+    const n5 = rxjs.combineLatest(n1, n2, n3)
+    console.log(n5);
+
 
     //log values
-    const sub = n5.subscribe(latestValuesProject => {
+    const sub = n1.subscribe(latestValuesProject => {
+      console.log(latestValuesProject);
       const element = document.createElement('p');
       element.innerText = latestValuesProject;
       document.body.appendChild(element)
